@@ -60,18 +60,18 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/blog/user/list',
     name: "User",
-    meta: { title: '用户管理'},
+    meta: { title: '用户管理',icon:'el-icon-user-solid'},
     children: [{
       path: 'list',
       name: 'blogUserList',
       component: () => import('@/views/blog/user/list'),
-      meta: { title: '用户列表' }
+      meta: { title: '用户列表',icon:'el-icon-user' }
     },
     {
       path: 'create',
       name: 'blogUserCreate',
       component: () => import('@/views/blog/user/form'),
-      meta: { title: '添加用户' }
+      meta: { title: '添加用户',icon:'el-icon-circle-plus-outline' }
     },
     {
       path: 'edit/:id',
