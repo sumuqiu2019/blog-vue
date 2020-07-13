@@ -32,6 +32,8 @@ const tokens = {
 }
 
 const user_api_name = process.env.VUE_APP_BASE_API + "/ums/userInfo/";
+const md_article_name = process.env.VUE_APP_BASE_API + "/md/article";
+
 
 //登录
 Mock.mock(user_api_name + 'vue-admin-template/user/login', config => {
@@ -116,3 +118,11 @@ Mock.mock(process.env.VUE_APP_BASE_API+'/oss/file/uploadAvatar', (options) =>{
 //queryUserInfoById
 
 
+
+import { getMdTree } from '../mock/mockJson/mockMD'
+
+Mock.mock(md_article_name, (options) =>{
+  // 最佳实践，将请求和参数都打印出来，以便调试
+  console.log(options)
+  return getMdTree()
+})

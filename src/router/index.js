@@ -82,7 +82,27 @@ export const constantRoutes = [
     }
     ]
   },
-
+  {
+    path: '/blog/mdArticle',
+    component: Layout,
+    redirect: '/blog/mdArticle/list',
+    name: 'mdArticle',
+    meta: { title: 'MD文档管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'list',
+        name: 'mdArticleList',
+        component: () => import('@/views/blog/mdArticle/list'),
+        meta: { title: 'MD列表', icon: 'table' }
+      },
+      {
+        path: 'write',
+        name: 'mdArticleWrite',
+        component: () => import('@/views/blog/mdArticle/write'),
+        meta: { title: '编辑文档', icon: 'tree' }
+      }
+    ]
+  },
   {
     path: '/example',
     component: Layout,
