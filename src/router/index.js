@@ -100,6 +100,12 @@ export const constantRoutes = [
         name: 'mdArticleWrite',
         component: () => import('@/views/blog/mdArticle/write'),
         meta: { title: '编辑文档', icon: 'tree' }
+      },
+      {
+        path: 'test',
+        name: 'mdArticleTest',
+        component: () => import('@/views/blog/mdArticle/test'),
+        meta: { title: 'test', icon: 'tree' }
       }
     ]
   },

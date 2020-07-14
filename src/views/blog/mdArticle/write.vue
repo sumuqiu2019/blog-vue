@@ -1,78 +1,66 @@
 <template>
-  <div class="app-container">
-    <el-form label-width="120px">
-      <el-form-item label="信息描述">
-        <el-tag type="info">excel模版说明</el-tag>
-        <el-tag>
-          <i class="el-icon-download" />
-          <a
-            :href="OSS_PATH + '/excel/%E8%AF%BE%E7%A8%8B%E5%88%86%E7%B1%BB%E5%88%97%E8%A1%A8%E6%A8%A1%E6%9D%BF.xls'"
-          >点击下载模版</a>
-        </el-tag>
-      </el-form-item>
-      <el-form-item label="选择Excel">
-        <el-upload
-          ref="upload"
-          :auto-upload="false"
-          :on-success="fileUploadSuccess"
-          :on-error="fileUploadError"
-          :disabled="importBtnDisabled"
-          :limit="1"
-          :action="BASE_API+'/admin/edu/subject/import'"
-          name="file"
-          accept="application/vnd.ms-excel"
-        >
-          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-          <el-button
-            :loading="loading"
-            style="margin-left: 10px;"
-            size="small"
-            type="success"
-            @click="submitUpload"
-          >{{ fileUploadBtnText }}</el-button>
-        </el-upload>
-      </el-form-item>
-    </el-form>
+  <div class="m-container">
+    <Header></Header>
+    <div class="m-content">
+      <el-form ref="editForm" status-icon :model="editForm" :rules="rules" label-width="80px">
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="editForm.title"></el-input>
+        </el-form-item>
+        <el-form-item label="摘要" prop="description">
+          <el-input type="textarea" v-model="editForm.description"></el-input>
+        </el-form-item>
+        <el-form-item label="内容" prop="content">
+          <mavon-editor v-model="editForm.content"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm()">立即创建</el-button>
+          <el-button>取消</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
-
-
 <script>
-export default {
-  data() {
-    return {
-      BASE_API: process.env.BASE_API, // 接口API地址
-      OSS_PATH: "process.env.OSS_PATH", // 阿里云OSS地址
-      fileUploadBtnText: "上传到服务器", // 按钮文字
-      importBtnDisabled: false, // 按钮是否禁用,
-      loading: false
-    };
-  },
-  methods: {
-    submitUpload() {
-      this.fileUploadBtnText = "正在上传";
-      this.importBtnDisabled = true;
-      this.loading = true;
-      this.$refs.upload.submit();
-    },
-    fileUploadSuccess(response) {
-      if (response.success === true) {
-        this.fileUploadBtnText = "导入成功";
-        this.loading = false;
-        this.$message({
-          type: "success",
-          message: response.message
-        });
+  export default {
+    name: "BlogEdit",
+    data() {
+      return {
+        editForm: {
+          id: null,
+          title: '',
+          description: '',
+          content: ''
+        },
+        rules: {
+          title: [
+            {required: true, message: '请输入标题', trigger: 'blur'},
+            {min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur'}
+          ],
+          description: [
+            {required: true, message: '请输入摘要', trigger: 'blur'}
+          ]
+        }
       }
     },
-    fileUploadError(response) {
-      this.fileUploadBtnText = "导入失败";
-      this.loading = false;
-      this.$message({
-        type: "error",
-        message: "导入失败"
-      });
+    created() {
+      const blogId = this.$route.params.blogId
+      const _this = this
+      if(blogId) {
+        
+      }
+    },
+    methods: {
+      submitForm() {
+        const _this = this
+        this.$refs.editForm.validate((valid) => {
+          if (valid) {
+            console.log(this.editForm)
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        })
+      }
     }
   }
-};
 </script>
